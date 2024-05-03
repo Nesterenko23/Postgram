@@ -10,7 +10,7 @@ const AuthPageLayout = ({ children }: { children: ReactNode }) => {
           height="100%"
           width="100%"
           objectFit={"cover"}
-          src="https://media.licdn.com/dms/image/D5612AQG41BInUYpgSA/article-cover_image-shrink_720_1280/0/1691562810505?e=2147483647&v=beta&t=T58r4Wz52BJWQy8y4aswNOoUCOWjt--QqzfiZiLeS5k"
+          src="https://www.intotheminds.com/blog/app/uploads/social-media-marketing-smm-banner.jpg"
         />
       </Box>
     </HStack>
