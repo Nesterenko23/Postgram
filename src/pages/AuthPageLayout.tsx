@@ -1,10 +1,12 @@
-import { Center, Image, HStack, Box, Heading } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { Center, Image, HStack, Box } from "@chakra-ui/react";
+import { Outlet } from "react-router-dom";
 
-const AuthPageLayout = ({ children }: { children: ReactNode }) => {
+const AuthPageLayout = () => {
   return (
     <HStack height="100vh">
-      <Center flex={1}>{children}</Center>
+      <Center flex={1}>
+        <Outlet />
+      </Center>
       <Box height="100vh" flex="1">
         <Image
           height="100%"

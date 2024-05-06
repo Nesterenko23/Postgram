@@ -1,4 +1,6 @@
 import { SubmitHandler } from "react-hook-form";
-import { SignUpInputs } from "../types/formInputs";
+import { SignInInputs, SignUpInputs } from "../types/formInputs";
 
 export const signUp: SubmitHandler<SignUpInputs> = (data) => console.log(data);
+
+export const signIn: SubmitHandler<SignInInputs> = (data) => console.log(data);

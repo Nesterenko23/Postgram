@@ -1,4 +1,4 @@
-import { AuthFormField } from "../types/formFields";
+import { SignInFormField, SignUpFormField } from "../types/formFields";
 import {
   emailRules,
   nameRules,
@@ -6,7 +6,7 @@ import {
   usernameRules,
 } from "../validations";
 
-export const signUpFields: AuthFormField[] = [
+export const signUpFields: SignUpFormField[] = [
   {
     required: true,
     label: "Name",
@@ -21,6 +21,23 @@ export const signUpFields: AuthFormField[] = [
     placeholder: "Username",
     validationRules: usernameRules,
   },
+  {
+    required: true,
+    label: "Email",
+    name: "email",
+    placeholder: "Email",
+    validationRules: emailRules,
+  },
+  {
+    required: true,
+    label: "Password",
+    name: "password",
+    placeholder: "Password",
+    validationRules: passwordRules,
+  },
+];
+
+export const signInFields: SignInFormField[] = [
   {
     required: true,
     label: "Email",
