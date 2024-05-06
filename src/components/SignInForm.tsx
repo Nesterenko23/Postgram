@@ -9,31 +9,31 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { SignUpInputs } from "../types/formInputs";
-import { signUpFields } from "../data/authFormFields";
-import { signUp } from "../utils/auth";
+import { SignInInputs } from "../types/formInputs";
+import { signInFields } from "../data/authFormFields";
+import { signIn } from "../utils/auth";
 import { Link } from "react-router-dom";
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpInputs>({
+  } = useForm<SignInInputs>({
     mode: "onBlur",
   });
 
   return (
     <VStack>
       <Heading as={"h1"} fontSize={30}>
-        Sign up to your account
+        Log in to your account
       </Heading>
       <Text color={"rgb(120 120 163)"}>
-        To use postgram, Please enter your details
+        Welcome back! Please enter your details.
       </Text>
       <form
         noValidate
-        onSubmit={handleSubmit(signUp)}
+        onSubmit={handleSubmit(signIn)}
         style={{
           marginTop: "0.5rem",
           display: "flex",
@@ -43,7 +43,7 @@ const SignUpForm = () => {
           width: "420px",
         }}
       >
-        {signUpFields.map(({ label, name, placeholder, validationRules }) => (
+        {signInFields.map(({ label, name, placeholder, validationRules }) => (
           <FormControl isInvalid={errors[name] ? true : false}>
             <FormLabel>{label}</FormLabel>
             <Input
@@ -63,15 +63,15 @@ const SignUpForm = () => {
           height={50}
           type="submit"
         >
-          Sign Up
+          Sign In
         </Button>
         <Text>
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
-            to={"/auth/signIn"}
+            to={"/auth/signUp"}
             style={{ marginLeft: "1", color: "rgb(135 126 255)" }}
           >
-            Log in
+            Sign up
           </Link>
         </Text>
       </form>
@@ -79,4 +79,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;
