@@ -56,21 +56,12 @@ const SignUpForm = () => {
             )}
           </FormControl>
         ))}
-        <Button
-          width="100%"
-          bg="rgb(135 126 255)"
-          color="white"
-          height={50}
-          type="submit"
-        >
+        <Button width="100%" height={50} type="submit">
           Sign Up
         </Button>
         <Text>
           Already have an account?{" "}
-          <Link
-            to={"/auth/signIn"}
-            style={{ marginLeft: "1", color: "rgb(135 126 255)" }}
-          >
+          <Link to={"/auth/signIn"} style={{ marginLeft: "1" }}>
             Log in
           </Link>
         </Text>

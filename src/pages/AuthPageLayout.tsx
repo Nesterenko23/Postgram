@@ -12,7 +12,7 @@ const AuthPageLayout = () => {
           height="100%"
           width="100%"
           objectFit={"cover"}
-          src="https://www.intotheminds.com/blog/app/uploads/social-media-marketing-smm-banner.jpg"
+          src="https://i.pinimg.com/564x/1a/4e/ae/1a4eaeb32726730d1fe1d96b4068ee38.jpg"
         />
       </Box>
     </HStack>
