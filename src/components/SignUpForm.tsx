@@ -8,11 +8,13 @@ import {
   VStack,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { SignUpInputs } from "../types/formInputs";
 import { signUpFields } from "../data/authFormFields";
 import { signUp } from "../utils/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FirebaseError } from "firebase/app";
+import React from "react";
 
 const SignUpForm = () => {
   const {
@@ -23,6 +25,25 @@ const SignUpForm = () => {
     mode: "onBlur",
   });
 
+  const [error, setError] = React.useState<null | string>(null);
+
+  const navigate = useNavigate();
+
+  const handleSignUp: SubmitHandler<SignUpInputs> = async (data) => {
+    const result = await signUp(data);
+    if (result instanceof FirebaseError) {
+      switch (result.code) {
+        case "auth/email-already-in-use":
+          return setError("Oops! Looks like this e-mail is already in use.");
+        default:
+          return setError(
+            "The server is temporarily unavailable. Please contact support or visit the page later."
+          );
+      }
+    }
+    navigate("/");
+  };
+
   return (
     <VStack>
       <Heading as={"h1"} fontSize={30}>
@@ -31,9 +52,10 @@ const SignUpForm = () => {
       <Text color={"rgb(120 120 163)"}>
         To use postgram, Please enter your details
       </Text>
+      <Text>{error}</Text>
       <form
         noValidate
-        onSubmit={handleSubmit(signUp)}
+        onSubmit={handleSubmit(handleSignUp)}
         style={{
           marginTop: "0.5rem",
           display: "flex",

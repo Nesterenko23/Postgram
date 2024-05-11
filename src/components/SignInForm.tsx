@@ -8,11 +8,13 @@ import {
   VStack,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { SignInInputs } from "../types/formInputs";
 import { signInFields } from "../data/authFormFields";
 import { signIn } from "../utils/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FirebaseError } from "firebase/app";
+import React from "react";
 
 const SignInForm = () => {
   const {
@@ -23,6 +25,25 @@ const SignInForm = () => {
     mode: "onBlur",
   });
 
+  const [error, setError] = React.useState<null | string>(null);
+
+  const navigate = useNavigate();
+
+  const handleSignIn: SubmitHandler<SignInInputs> = async (data) => {
+    const result = await signIn(data);
+    if (result instanceof FirebaseError) {
+      switch (result.code) {
+        case "auth/invalid-credential":
+          return setError("Oops! Looks like you entered the wrong data.");
+        default:
+          return setError(
+            "The server is temporarily unavailable. Please contact support or visit the page later."
+          );
+      }
+    }
+    navigate("/");
+  };
+
   return (
     <VStack>
       <Heading as={"h1"} fontSize={30}>
@@ -31,9 +52,10 @@ const SignInForm = () => {
       <Text color={"rgb(120 120 163)"}>
         Welcome back! Please enter your details.
       </Text>
+      <Text>{error}</Text>
       <form
         noValidate
-        onSubmit={handleSubmit(signIn)}
+        onSubmit={handleSubmit(handleSignIn)}
         style={{
           marginTop: "0.5rem",
           display: "flex",
