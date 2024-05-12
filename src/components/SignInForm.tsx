@@ -15,6 +15,7 @@ import { signIn } from "../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import React from "react";
+import Spinner from "./Spinner";
 
 const SignInForm = () => {
   const {
@@ -26,12 +27,15 @@ const SignInForm = () => {
   });
 
   const [error, setError] = React.useState<null | string>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const handleSignIn: SubmitHandler<SignInInputs> = async (data) => {
+    setLoading(true);
     const result = await signIn(data);
     if (result instanceof FirebaseError) {
+      setLoading(false);
       switch (result.code) {
         case "auth/invalid-credential":
           return setError("Oops! Looks like you entered the wrong data.");
@@ -41,54 +45,64 @@ const SignInForm = () => {
           );
       }
     }
+    setLoading(false);
     navigate("/");
   };
 
   return (
-    <VStack>
-      <Heading as={"h1"} fontSize={30}>
-        Log in to your account
-      </Heading>
-      <Text color={"rgb(120 120 163)"}>
-        Welcome back! Please enter your details.
-      </Text>
-      <Text>{error}</Text>
-      <form
-        noValidate
-        onSubmit={handleSubmit(handleSignIn)}
-        style={{
-          marginTop: "0.5rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "1rem",
-          width: "420px",
-        }}
-      >
-        {signInFields.map(({ label, name, placeholder, validationRules }) => (
-          <FormControl key={name} isInvalid={errors[name] ? true : false}>
-            <FormLabel>{label}</FormLabel>
-            <Input
-              {...register(name, validationRules)}
-              height={50}
-              placeholder={placeholder}
-            />
-            {errors[name] && (
-              <FormErrorMessage>{errors[name]?.message}</FormErrorMessage>
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <VStack px="5" fontSize={16}>
+          <Heading as={"h1"} fontSize={30}>
+            Log in to your account
+          </Heading>
+          <Text color={"rgb(120 120 163)"}>
+            Welcome back! Please enter your details
+          </Text>
+          <Text>{error}</Text>
+          <form
+            noValidate
+            onSubmit={handleSubmit(handleSignIn)}
+            style={{
+              marginTop: "0.5rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "1rem",
+              width: "26.25rem",
+            }}
+          >
+            {signInFields.map(
+              ({ label, name, placeholder, validationRules, required }) => (
+                <FormControl isRequired={required} key={name} isInvalid={errors[name] ? true : false}>
+                  <FormLabel fontSize="1em">{label}</FormLabel>
+                  <Input
+                    fontSize="1em"
+                    {...register(name, validationRules)}
+                    height={50}
+                    placeholder={placeholder}
+                  />
+                  {errors[name] && (
+                    <FormErrorMessage>{errors[name]?.message}</FormErrorMessage>
+                  )}
+                </FormControl>
+              )
             )}
-          </FormControl>
-        ))}
-        <Button width="100%" height={50} type="submit">
-          Sign In
-        </Button>
-        <Text>
-          Don't have an account?{" "}
-          <Link to={"/auth/signUp"} style={{ marginLeft: "1" }}>
-            Sign up
-          </Link>
-        </Text>
-      </form>
-    </VStack>
+            <Button fontSize="1em" width="100%" height={50} type="submit">
+              Sign In
+            </Button>
+            <Text>
+              Don't have an account?{" "}
+              <Link to={"/auth/signUp"} style={{ marginLeft: "1" }}>
+                Sign up
+              </Link>
+            </Text>
+          </form>
+        </VStack>
+      )}
+    </>
   );
 };
 
