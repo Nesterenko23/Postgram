@@ -7,7 +7,7 @@ const AuthPageLayout = () => {
       <Center flex={1}>
         <Outlet />
       </Center>
-      <Box height="100vh" flex="1">
+      <Box height="100vh" flex="1" display={["none", "none", "none", "inline-block", "inline-block", "inline-block"]}>
         <Image
           height="100%"
           width="100%"

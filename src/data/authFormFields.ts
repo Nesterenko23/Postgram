@@ -8,7 +8,7 @@ import {
 
 export const signUpFields: SignUpFormField[] = [
   {
-    required: true,
+    required: false,
     label: "Name",
     name: "name",
     placeholder: "Name",
