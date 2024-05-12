@@ -3,22 +3,37 @@ import { SignInInputs, SignUpInputs } from "../types/formInputs";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { User } from "../types/user";
 
-export const signUp = async ({ email, password, username }: SignUpInputs) => {
+export const signUp = async ({
+  name,
+  email,
+  password,
+  username,
+}: SignUpInputs) => {
   try {
     const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    await updateProfile(user, {
-      displayName: username,
-    });
+
+    const UserModel: User = {
+      uid: user.uid,
+      name,
+      email,
+      username,
+      userPhoto: "",
+    };
+
+    await setDoc(doc(db, "users", user.uid), UserModel);
+
     return user;
   } catch (error) {
+    console.log(error);
     return error;
   }
 };

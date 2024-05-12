@@ -66,7 +66,7 @@ const SignInForm = () => {
         }}
       >
         {signInFields.map(({ label, name, placeholder, validationRules }) => (
-          <FormControl isInvalid={errors[name] ? true : false}>
+          <FormControl key={name} isInvalid={errors[name] ? true : false}>
             <FormLabel>{label}</FormLabel>
             <Input
               {...register(name, validationRules)}

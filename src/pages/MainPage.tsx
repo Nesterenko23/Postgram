@@ -1,7 +1,15 @@
+import { Heading, Text } from "@chakra-ui/react";
+import { useAppSelector } from "../hooks/reduxHooks";
+import { currentUserSelector } from "../redux/slices/currentUserSlice";
+
 const MainPage = () => {
+
+  const currentUser = useAppSelector(currentUserSelector)
+
   return (
     <div>
-      <h1>Main page</h1>
+      <Heading>Hello {currentUser?.username}</Heading>
+      <Text>{currentUser?.email}</Text>
     </div>
   );
 };
