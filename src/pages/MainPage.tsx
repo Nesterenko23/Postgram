@@ -1,15 +1,14 @@
-import { HStack, Heading, Text } from "@chakra-ui/react";
-import { useAppSelector } from "../hooks/reduxHooks";
-import { currentUserSelector } from "../redux/slices/currentUserSlice";
+import { HStack } from "@chakra-ui/react";
 import SideBar from "../components/SideBar";
+import DrawerWrapper from "../components/Drawer";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const MainPage = () => {
-
-  const currentUser = useAppSelector(currentUserSelector)
+  const { width } = useWindowDimensions();
 
   return (
     <HStack>
-      <SideBar/>
+      {width < 960 ? <DrawerWrapper /> : <SideBar />}
     </HStack>
   );
 };
