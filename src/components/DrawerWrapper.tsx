@@ -14,8 +14,14 @@ const DrawerWrapper = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>
-        <HiMenuAlt1 fontSize={24}/>
+      <Button
+        onClick={onOpen}
+        position="absolute"
+        top={2}
+        right={2}
+        zIndex="100"
+      >
+        <HiMenuAlt1 fontSize={24} />
       </Button>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>

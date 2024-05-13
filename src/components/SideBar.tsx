@@ -20,7 +20,7 @@ const SideBar = () => {
   const currentUser = useAppSelector(currentUserSelector);
 
   return (
-    <VStack gap="2.75rem" w="270px" p="2.5rem 1.5rem">
+    <VStack gap="2.75rem" w="270px" p="2.5rem 1.5rem" height="100%">
       <Heading fontSize={25} alignSelf="flex-start">
         Postgram
       </Heading>
