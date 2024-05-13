@@ -8,9 +8,17 @@ import {
   CardFooter,
   CardHeader,
   HStack,
+  Flex,
+  VStack,
 } from "@chakra-ui/react";
+import {
+  HiOutlineHeart,
+  HiOutlineChatAlt2,
+  HiOutlineBookmark,
+} from "react-icons/hi";
 
-const PostCard = () => {
+const PostCard = () => {  
+
   return (
     <Card w="100%">
       <CardHeader>
@@ -59,7 +67,18 @@ const PostCard = () => {
         </Box>
       </CardBody>
 
-      <CardFooter></CardFooter>
+      <CardFooter>
+        <HStack justifyContent="space-between" w="100%">
+          <HStack gap="20px">
+            <HStack gap="1" alignItems="center">
+              <HiOutlineHeart fontSize="24" />
+              <Text>157</Text>
+            </HStack>
+            <HiOutlineChatAlt2 fontSize="24"/>
+          </HStack>
+          <HiOutlineBookmark fontSize="24"/>
+        </HStack>
+      </CardFooter>
     </Card>
   );
 };
